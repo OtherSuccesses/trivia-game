@@ -2,7 +2,11 @@
 <html>
 <head>
 	<title>Harry Potter Trivia</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css">
+	<link rel="stylesheet" href="assets/css/style.css">
 	<script type="text/javascript" src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src ="assets/javascript/js.js"></script>
+
 </head>
 <body>
 	<header id = "hp-header">
@@ -10,12 +14,15 @@
 	</header>
 
 	<div id = "trivia">
-		<div id = "question">		
+		<div id = "start">
+			<button id = "start-btn">Start the Quiz</button>
 		</div>
-		<div id = "results">
+		<div id = "question" class="hidden">
+		</div>
+		<div id = "results" class = "hidden">
 		</div>
 	</div>
-	<div id = "progress">
+	<div id = "progress" class = "hidden">
 	</div>
 
 </body>

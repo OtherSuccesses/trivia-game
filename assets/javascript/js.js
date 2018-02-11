@@ -3,10 +3,8 @@ var interval;
 var game = {
 	"currentQuestion":{
 	},
-	"right":0,
+	"correct":0,
 	"incorrect":0,
-	"blank":0,
-	"progress":0,
 	"timer":30,
 
 	//All the Questions
@@ -104,7 +102,7 @@ var game = {
 			"chosen": false,
 			"correct": "A poltergeist",
 			"wrong": ["A giant dog",  "A talking hat", "A cat that runs a shop"],
-			"image": "assets/images/Peeves01",
+			"image": "assets/images/Peeves01.jpg",
 
 		},
 		{
@@ -169,11 +167,10 @@ var game = {
 			"chosen": false,
 			"correct": "Nastily Exhausting Wizarding Test",
 			"wrong": ["NeverEnding Wizard Trials", "Nauseating Exam for Wizard Talent", "No one remembers anymore, it was created so long ago."],
-			"image": "assets/images/Lockhart's_Test.jpg",
+			"image": "assets/images/Lockharts_Test.jpg",
 
 		}
 	],
-	"started":false,
 	"finished":false,
 	"answered":false,
 	"questions":[],
@@ -186,6 +183,7 @@ var game = {
 		$("#progress").removeClass("hidden");
 		game.setQuestions();
 		game.loadQuestion(game.questions[0]);
+		$("#restart").removeClass("hidden");
 	},
 
 //makes sure not to repeat questions
@@ -231,6 +229,10 @@ var game = {
 
 	loadQuestion: function(question){
 		interval = setInterval(game.timeCount, 1000);
+		$("#timer").html("30");
+		game.timer= 30;
+		$("#presented-by-timex").removeClass("hidden");
+		$("#results").empty();
 		game.currentQuestion=question;
 		var buttonArr = ["a", "a", "a", "a"];
 		$("#question").html("<h2>" + game.currentQuestion.question + "<h2>");
@@ -259,16 +261,51 @@ var game = {
 		$("#timer").html(game.timer);
 		if (game.timer ===0){
 			console.log("Time expired");
-			game.results();
+			game.incorrect++;
+			game.checkDone();
 		}
 	},
 
-	correct:function(){
+	correctAns:function(){
+		game.correct++;
+		console.log(game.correct);
+		$("#results").prepend("<h1>Correct!</h1>")
+		.append("<button id=next-question>Next Question</button>");
+	},
+
+	incorrectAns:function(){
+		game.incorrect++;
+		$("#results").prepend("<h1>Incorrect!</h1>")
+		.append("<p>The correct answer was " + game.currentQuestion.correct +".</p><br>")
+		.append("<button id=next-question>Next Question</button>");
 
 	},
 
-	incorrect:function(){
+	next: function (){
+		$("#results").addClass("hidden");
+		game.loadQuestion(game.questions[game.correct+game.incorrect]);
+	},
 
+	restart:function(){
+		game.incorrect = 0;
+		game.correct = 0;
+		game.questions = [];
+		game.gameStart();
+	},
+
+	checkDone:function(event){
+		if((game.correct+game.incorrect)==game.questions.length){
+			game.gameFinished();
+		}
+		else{
+			game.results(event);
+		}
+	},
+
+	gameFinished:function(){
+		$("#results").empty();
+		$("#results").append("<h1>Congratulations, You've finished the quiz!</h1>" +
+			"<br><p>You answered " + game.correct + " questions correctly, and " + game.incorrect + " questions incorrectly!");
 	},
 
 	results:function(event){
@@ -276,6 +313,7 @@ var game = {
 		$("#results").removeClass("hidden");
 		$("#presented-by-timex").addClass("hidden");
 		if (game.timer <=0){
+			clearInterval(interval);
 			game.timeUp();
 		}
 		else{
@@ -283,25 +321,33 @@ var game = {
 			$("#results").append("<img src='" + game.currentQuestion.image 
 				+ "' style='height:300px;'>");
 			if ($(event.target).attr("data-name") == game.currentQuestion.correct){
-				game.correct();
+				game.correctAns();
 			}
 			else{
-				game.incorrect();
+				game.incorrectAns();
 			}
 		}
 	},
 
 	timeUp: function(){
-		$("#question").html("You are out of time!")
-		$("#trivia").append("<button id=next-question>Next Question</button>")
+		$("#results").prepend("<h2>You are out of time!</h2>")
+		.append("<button id=next-question>Next Question</button>");
 	}
 }
 
 //Event Listeners
+$(document).on("click", "#next-question", function(){
+	game.next();
+});
+
+$(document).on("click", "#restart", function(){
+	game.restart();
+});
+
 $(document).on("click", "#start-btn", function(){
 	game.gameStart();
 });
 
 $(document).on("click", ".answers", function(){
-	game.results(event);
+	game.checkDone(event);
 });

@@ -1,4 +1,4 @@
-var game = {
+ game = {
 	"currentQuestion":{
 	},
 	"right":0,
@@ -14,7 +14,7 @@ var game = {
 			"wrongOne": "Boggles",
 			"wrongTwo": "Figgs",
 			"wrongThree": "Bludgers",
-			"image": "assets/images/",
+			"image": "assets/images/Muggle.jps",
 		},
 		"questionTwo":{
 			"question": "What is Harry's cousin's name?",
@@ -53,7 +53,7 @@ var game = {
 			"wrongOne": "Lion",
 			"wrongTwo": "Snake",
 			"wrongThree": "Armadillo",
-			"image": "assets/images/Hufflepuff",
+			"image": "assets/images/Hufflepuff.jpg",
 
 		},
 		"questionSix":{
@@ -63,27 +63,27 @@ var game = {
 			"wrongOne": "The Minister of Magic",
 			"wrongTwo": "The wizened janitor",
 			"wrongThree": "An inventor",
-			"image": "assets/images/Albus_Dumbledore",
+			"image": "assets/images/Albus_Dumbledore.jpg",
 
 		},
 		"questionSeven":{
-			"question": "",
+			"question": "What is a Squib",
 			"chosen": false,
-			"correct": "",
-			"wrongOne": "",
-			"wrongTwo": "",
-			"wrongThree": "",
-			"image": "",
+			"correct": "Someone who should be able to do magic but can't.",
+			"wrongOne": "A small explosion.",
+			"wrongTwo": "A broken wand.",
+			"wrongThree": "A play in Quidditch",
+			"image": "assets/images/walder-frey-34.jpg",
 
 		},
 		"questionEight":{
-			"question": "",
+			"question": "What is Hedwig?",
 			"chosen": false,
-			"correct": "",
-			"wrongOne": "",
-			"wrongTwo": "",
-			"wrongThree": "",
-			"image": "",
+			"correct": "An Owl",
+			"wrongOne": "A rat",
+			"wrongTwo": "A cat",
+			"wrongThree": "A vampire",
+			"image": "assets/images/Hedwig.jpg",
 
 		}
 	},
@@ -129,43 +129,43 @@ var game = {
 
 		},
 		"questionThirteen":{
-			"question": "",
+			"question": "What kind of creatures does Charlie Weasley work with in Romania",
 			"chosen": false,
-			"correct": "",
-			"wrongOne": "",
-			"wrongTwo": "",
-			"wrongThree": "",
-			"image": "",
+			"correct": "Dragons",
+			"wrongOne": "Banshees",
+			"wrongTwo": "Mermaids",
+			"wrongThree": "Unicorns",
+			"image": "assets/images/dragon.jpg",
 
 		},
 		"questionFourteen":{
-			"question": "",
+			"question": "What is the name of the Weasley brothers' business venture",
 			"chosen": false,
-			"correct": "",
-			"wrongOne": "",
-			"wrongTwo": "",
-			"wrongThree": "",
-			"image": "",
+			"correct": "Weasley Wizard Wheezes",
+			"wrongOne": "Weasley Wondrous Whizbangs",
+			"wrongTwo": "Magical Marvels Market",
+			"wrongThree": "The Magic Jokeshop",
+			"image": "assets/images/WWW.jpg",
 
 		},
 		"questionFifteen":{
-			"question": "",
+			"question": "Which of these is not an Unforgivable Curse",
 			"chosen": false,
-			"correct": "",
-			"wrongOne": "",
-			"wrongTwo": "",
-			"wrongThree": "",
-			"image": "",
+			"correct": "Sectumsempra",
+			"wrongOne": "Avada Kedavra",
+			"wrongTwo": "Cruciatus",
+			"wrongThree": "Imperius",
+			"image": "assets/images/The_Unforgivable_Curses.jpg",
 
 		},
 		"questionSixteen":{
-			"question": "",
+			"question": "What does Ron see in the Mirror of Erised",
 			"chosen": false,
-			"correct": "",
-			"wrongOne": "",
-			"wrongTwo": "",
-			"wrongThree": "",
-			"image": "",
+			"correct": "Himself holding up the Quidditch Cup",
+			"wrongOne": "Kissing Hermione",
+			"wrongTwo": "How to finally defeat Voldemort",
+			"wrongThree": "Being wealthy",
+			"image": "assets/images/RonErised.jpg",
 
 		}
 	},
@@ -201,13 +201,13 @@ var game = {
 
 		},
 		"questionTwenty":{
-			"question": "",
+			"question": "What does NEWT stand for?",
 			"chosen": false,
-			"correct": "",
-			"wrongOne": "",
-			"wrongTwo": "",
-			"wrongThree": "",
-			"image": "",
+			"correct": "Nastily Exhausting Wizarding Test",
+			"wrongOne": "NeverEnding Wizard Trials",
+			"wrongTwo": "Nauseating Exam for Wizard Talent",
+			"wrongThree": "No one remembers anymore, it was created so long ago.",
+			"image": "assets/images/Lockhart's_Test.jpg",
 
 		}
 
@@ -215,4 +215,5 @@ var game = {
 	"started":false,
 	"finished":false,
 	"answered":false,
+	"Questions":[],
 }

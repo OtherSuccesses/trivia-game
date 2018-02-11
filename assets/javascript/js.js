@@ -69,7 +69,7 @@ var game = {
 		{
 			"question": "What is Hedwig?",
 			"chosen": false,
-			"correct": "An Owl",
+			"correct": "An owl",
 			"wrong": ["A rat", "A cat", "A vampire"],
 			"image": "assets/images/Hedwig.jpg",
 
@@ -180,12 +180,12 @@ var game = {
 
 //game start function
 	gameStart: function(){
-		$("#trivia").prepend("<h2>Time: <span id='timer'>30</span> Seconds Left</h2");
+		$("#trivia").prepend("<h2 id = 'presented-by-timex'>Time: <span id='timer'>30</span> Seconds Left</h2");
 		$("#start").addClass("hidden");
 		$("#question").removeClass("hidden");
 		$("#progress").removeClass("hidden");
 		game.setQuestions();
-		game.loadQuestion();
+		game.loadQuestion(game.questions[0]);
 	},
 
 //makes sure not to repeat questions
@@ -229,9 +229,28 @@ var game = {
 		console.log(game.questions);
 	},
 
-	loadQuestion: function(){
+	loadQuestion: function(question){
 		interval = setInterval(game.timeCount, 1000);
-		$("#question").html("<h2>" + game.currentQuestion[0].question + "<h2>");
+		game.currentQuestion=question;
+		var buttonArr = ["a", "a", "a", "a"];
+		$("#question").html("<h2>" + game.currentQuestion.question + "<h2>");
+		var tempPos = Math.floor(Math.random()*4);
+		buttonArr[tempPos] = game.currentQuestion.correct;
+		question.wrong.splice(tempPos, 0, game.currentQuestion.correct);
+		buttonArr = game.populateWrongAnswers(buttonArr, question);
+		for (var i = 0; i < buttonArr.length; i++){
+			$("#question").append("<button class='answers' data-name='" 
+				+ buttonArr[i] +"'>" + buttonArr[i] + "</button>");
+		}
+	},
+
+	populateWrongAnswers:function(buttonArr, question){
+		for(var i = 0; i< buttonArr.length; i++){
+			if (buttonArr[i] == "a"){
+				buttonArr[i] = question.wrong[i];
+			}
+		}
+		return buttonArr;
 	},
 
 //timer initialize function
@@ -244,13 +263,31 @@ var game = {
 		}
 	},
 
-	results:function(){
+	correct:function(){
+
+	},
+
+	incorrect:function(){
+
+	},
+
+	results:function(event){
+		$("#question").empty();
+		$("#results").removeClass("hidden");
+		$("#presented-by-timex").addClass("hidden");
 		if (game.timer <=0){
-			interval = clearInterval();
 			game.timeUp();
 		}
 		else{
-
+			clearInterval(interval);
+			$("#results").append("<img src='" + game.currentQuestion.image 
+				+ "' style='height:300px;'>");
+			if ($(event.target).attr("data-name") == game.currentQuestion.correct){
+				game.correct();
+			}
+			else{
+				game.incorrect();
+			}
 		}
 	},
 
@@ -263,4 +300,8 @@ var game = {
 //Event Listeners
 $(document).on("click", "#start-btn", function(){
 	game.gameStart();
+});
+
+$(document).on("click", ".answers", function(){
+	game.results(event);
 });

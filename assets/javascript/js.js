@@ -57,7 +57,7 @@ var game = {
 
 		},
 		{
-			"question": "What is a Squib",
+			"question": "What is a Squib?",
 			"chosen": false,
 			"correct": "Someone who should be able to do magic but can't.",
 			"wrong": ["A small explosion.", "A broken wand.", "A play in Quidditch"],
@@ -106,7 +106,7 @@ var game = {
 
 		},
 		{
-			"question": "What kind of creatures does Charlie Weasley work with in Romania",
+			"question": "What kind of creatures does Charlie Weasley work with in Romania?",
 			"chosen": false,
 			"correct": "Dragons",
 			"wrong": ["Banshees", "Mermaids", "Unicorns"],
@@ -114,7 +114,7 @@ var game = {
 
 		},
 		{
-			"question": "What is the name of the Weasley brothers' business venture",
+			"question": "What is the name of the Weasley brothers' business venture?",
 			"chosen": false,
 			"correct": "Weasley Wizard Wheezes",
 			"wrong": ["Weasley Wondrous Whizbangs", "Magical Marvels Market", "The Magic Jokeshop"],
@@ -122,7 +122,7 @@ var game = {
 
 		},
 		{
-			"question": "Which of these is not an Unforgivable Curse",
+			"question": "Which of these is not an Unforgivable Curse?",
 			"chosen": false,
 			"correct": "Sectumsempra",
 			"wrong": ["Avada Kedavra", "Cruciatus", "Imperius"],
@@ -130,7 +130,7 @@ var game = {
 
 		},
 		{
-			"question": "What does Ron see in the Mirror of Erised",
+			"question": "What does Ron see in the Mirror of Erised?",
 			"chosen": false,
 			"correct": "Himself holding up the Quidditch Cup",
 			"wrong": ["Kissing Hermione", "How to finally defeat Voldemort", "Being wealthy"],
@@ -171,8 +171,6 @@ var game = {
 
 		}
 	],
-	"finished":false,
-	"answered":false,
 	"questions":[],
 
 //game start function
@@ -182,6 +180,7 @@ var game = {
 		$("#question").removeClass("hidden");
 		$("#progress").removeClass("hidden");
 		game.setQuestions();
+		console.log(game.questions);
 		game.loadQuestion(game.questions[0]);
 		$("#restart").removeClass("hidden");
 	},
@@ -235,10 +234,12 @@ var game = {
 		$("#results").empty();
 		game.currentQuestion=question;
 		var buttonArr = ["a", "a", "a", "a"];
+		console.log(buttonArr);
 		$("#question").html("<h2>" + game.currentQuestion.question + "<h2>");
 		var tempPos = Math.floor(Math.random()*4);
 		buttonArr[tempPos] = game.currentQuestion.correct;
 		question.wrong.splice(tempPos, 0, game.currentQuestion.correct);
+		console.log(question.wrong);
 		buttonArr = game.populateWrongAnswers(buttonArr, question);
 		for (var i = 0; i < buttonArr.length; i++){
 			$("#question").append("<button class='answers' data-name='" 
@@ -268,16 +269,15 @@ var game = {
 
 	correctAns:function(){
 		game.correct++;
-		console.log(game.correct);
 		$("#results").prepend("<h1>Correct!</h1>")
-		.append("<button id=next-question>Next Question</button>");
+		setTimeout(game.checkDone, 4000);
 	},
 
 	incorrectAns:function(){
 		game.incorrect++;
 		$("#results").prepend("<h1>Incorrect!</h1>")
-		.append("<p>The correct answer was " + game.currentQuestion.correct +".</p><br>")
-		.append("<button id=next-question>Next Question</button>");
+		.append("<p>The correct answer was " + game.currentQuestion.correct +".</p><br>");
+		setTimeout(game.checkDone, 4000);
 
 	},
 
@@ -287,25 +287,26 @@ var game = {
 	},
 
 	restart:function(){
+		game.currentQuestion={};
+		$("#presented-by-timex").empty();
+		clearInterval(interval);
 		game.incorrect = 0;
 		game.correct = 0;
 		game.questions = [];
 		game.gameStart();
 	},
 
-	checkDone:function(event){
+	checkDone:function(){
+		console.log("length of question array" + game.questions.length);
+		console.log("questions answered" + (game.correct + game.incorrect));
 		if((game.correct+game.incorrect)==game.questions.length){
-			game.gameFinished();
+			$("#results").empty();
+			$("#results").append("<h1>Congratulations, You've finished the quiz!</h1>" +
+				"<br><p>You answered " + game.correct + " questions correctly, and " + game.incorrect + " questions incorrectly!");
 		}
 		else{
-			game.results(event);
+			game.next();
 		}
-	},
-
-	gameFinished:function(){
-		$("#results").empty();
-		$("#results").append("<h1>Congratulations, You've finished the quiz!</h1>" +
-			"<br><p>You answered " + game.correct + " questions correctly, and " + game.incorrect + " questions incorrectly!");
 	},
 
 	results:function(event){
@@ -315,6 +316,7 @@ var game = {
 		if (game.timer <=0){
 			clearInterval(interval);
 			game.timeUp();
+			game.incorrectAns();
 		}
 		else{
 			clearInterval(interval);
@@ -330,15 +332,11 @@ var game = {
 	},
 
 	timeUp: function(){
-		$("#results").prepend("<h2>You are out of time!</h2>")
-		.append("<button id=next-question>Next Question</button>");
+		$("#results").prepend("<h2>You are out of time!</h2>");
 	}
 }
 
 //Event Listeners
-$(document).on("click", "#next-question", function(){
-	game.next();
-});
 
 $(document).on("click", "#restart", function(){
 	game.restart();
@@ -349,5 +347,5 @@ $(document).on("click", "#start-btn", function(){
 });
 
 $(document).on("click", ".answers", function(){
-	game.checkDone(event);
+	game.results(event);
 });

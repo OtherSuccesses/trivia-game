@@ -1,12 +1,69 @@
+body{
+	text-align: center;
+}
+
 .hidden{
 	display: none;
 }
 
+button{
+}
+
+#presented-by-timex{
+	height:27px;
+}
+
+#timer{
+	font-weight:bold;
+}
+
+img{
+	margin:5px;
+}
+
+
+
 #hp-header{
-	color: blue;
-	font-size: 23px;
+	width:30%;
+	float:center;
+	height:45px;
+	background-color: silver;
+	padding-top:4px;
+	border-style: solid;
+	border-width: 3px;
+	border-color:black;
+	margin:auto;
+	margin-top:20px;
+	margin-bottom:20px;
+	color: forestgreen;
+	font-size: 30px;
+	font-weight: bold;
+	text-decoration:underline;
+}
+
+#trivia{
+	width:85%;
+	margin:auto;
+	float:center;
+	background-color: palegreen;
+	padding:15px;
+}
+
+h2{
+	font-size: 15px;
 }
 
 .answers{
+	height:25px;
+	width:70%;
+	font-size:16px;
+	margin:auto;
+	margin-top:6px;
+	text-align: center;
 	display:block;
+	float:center;
+}
+
+#restart{
+	margin-top:6px;
 }
